@@ -14,8 +14,6 @@
 
 (defn read-stats [date] (edn/read-string (slurp (str "https://clojars.org/stats/downloads-" date ".edn"))))
 
-(defn vectorize [stats] (map (fn [tuple] (vector (key tuple) (reduce + (vals (val tuple))))) stats))
-
 (defn hashmapize [stats] (into (hash-map) (map (fn [tuple] {(key tuple) (reduce + (vals (val tuple)))}) stats)))
 
 (defn sort-stats-descending [stats] (sort-by second > stats))
@@ -24,5 +22,5 @@
 
 (defn get-stats [date] (hashmapize (read-stats (format-date date))))
 
-(defn get-stats-l5d [days] (let [stats (map get-stats days)]
-  (merge-with + (nth stats 0) (nth stats 1) (nth stats 2) (nth stats 3) (nth stats 4))))
+(defn get-stats-of-last-days [days] (let [stats (map get-stats days)]
+                                      (apply merge-with + stats)))
