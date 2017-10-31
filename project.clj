@@ -1,10 +1,14 @@
-(defproject cljstats "0.1.0-SNAPSHOT"
+(defproject cljstats "1.0.1"
   :description "wrangling stats from clojars.org"
-  :url "https://github.com/timokramer/cljstats"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+  :url  "https://github.com/timokramer/cljstats"
+  :license  {:name  "Eclipse Public License"
+             :url  "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
+                 [metosin/compojure-api "1.1.11"]
                  [clojure.java-time "0.3.0"]]
-  :main ^:skip-aot cljstats.core
-  :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+;;  :ring {:handler compojure.api.examples.handler/app}
+  :ring {:handler cljstats.handler/app}
+  :uberjar-name "examples.jar"
+  :uberwar-name "examples.war"
+  :profiles {:dev {:dependencies [[javax.servlet/javax.servlet-api "3.1.0"]]
+                   :plugins [[lein-ring "0.12.0"]]}})

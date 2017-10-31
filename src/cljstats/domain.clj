@@ -1,6 +1,14 @@
-(ns cljstats.core
-    (:require [clojure.edn :as edn]
-              [java-time :as jtime]))
+(ns cljstats.domain
+  (:require [schema.core :as s]
+            [clojure.edn :as edn]
+            [java-time :as jtime]
+            [ring.swagger.schema :refer [coerce!]]))
+
+;; Domain
+
+;;(s/defschema Charts {:days Integer})
+
+;; Repository
 
 (def now (jtime/local-date))
 
@@ -22,3 +30,4 @@
 
 (defn get-stats-of-last-days [days] (let [stats (map get-stats days)]
                                       (apply merge-with + stats)))
+
