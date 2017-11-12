@@ -17,6 +17,6 @@
       :tags ["charts"]
 
       (GET "/" []
-        :query-params [x :- Long]
+        :query-params [days :- Long]
         :summary "Last x days"
-        (ok (sort-stats-ascending (get-stats-of-last-days (last-n-days x))))))))
+        (ok (sort-stats-ascending (get-stats-of-last-days (last-n-days days))))))))

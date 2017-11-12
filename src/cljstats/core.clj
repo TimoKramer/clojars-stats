@@ -22,3 +22,9 @@
 
 (defn get-stats-of-last-days [days] (let [stats (map get-stats days)]
                                       (apply merge-with + stats)))
+
+(defn keywordize [date, stats] (into (hash-map) {(keyword (format-date date)) stats}))
+
+(defn get-raw-stats [date] (keywordize date (read-stats (format-date date))))
+
+(defn get-raw-stats-of-last-days [days] (map get-raw-stats days))
