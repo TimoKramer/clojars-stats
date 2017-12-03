@@ -19,4 +19,4 @@
       (GET "/" []
         :query-params [days :- Long]
         :summary "Last x days"
-        (ok (sort-stats-ascending (get-stats-of-last-days (last-n-days days))))))))
+        (ok (sort-stats-ascending (load-stats-of-last-days days)))))))
