@@ -1,9 +1,6 @@
 (ns cljstats.domain
   (:require [schema.core :as s]
-            [cljstats.db :as db]
-            [clojure.edn :as edn]
-            [java-time :as jtime]
-            [ring.swagger.schema :refer [coerce!]]))
+            [cljstats.db :as db]))
 
 ;; Domain
 
@@ -15,5 +12,6 @@
 
 (defn sort-stats-ascending [stats] (sort-by second < stats))
 
-(defn load-stats-of-last-days [days] (db/get-stats-of-last-days days))
-
+(defn load-stats-of-last-days
+  ([days] (db/get-stats-of-last-days days))
+  ([days & libs] (db/get-stats-of-last-days-for-libs days libs)))
