@@ -39,10 +39,10 @@
 
 (defn get-stats [formatted-date] (hashmapize (read-stats formatted-date)))
 
-(defn get-stats-of-last-days [days] (let [dates (map format-date (last-dates days))
+(defn get-stats-of-last-days [days] (let [dates (map format-date (last-dates (yesterday) days))
                                           stats (map get-stats dates)]
                                       (apply merge-with + stats)))
 
-(defn get-stats-of-last-days-for-libs [days libs]
+(defn get-stats-of-last-days-for-libs [days & libs]
   (let [stats (get-stats-of-last-days days)]
-    (filter #(= (second (key %)) (first libs)) stats)))
+    (select-keys stats libs)))

@@ -46,3 +46,9 @@
   (testing "returning a hash-map from stats"
     (let [edn {["viz-cljc" "viz-cljc"] {"0.1.2" 2}, ["com.taoensso" "faraday"] {"1.9.0" 7, "1.7.1" 1, "1.6.0" 1}, ["pjstadig" "humane-test-output"] {"0.7.1" 3, "0.8.2" 20, "0.8.3" 63, "0.7.0" 18, "0.6.0" 2287, "0.8.1" 154, "0.8.0" 1}, ["lein-junit" "lein-junit"] {"1.1.7" 2, "1.1.8" 7}, ["cirru" "sepal"] {"0.1.2" 1}}]
       (is (map? (hashmapize edn))))))
+
+;;; integration test
+;;(deftest get-stats-of-last-days-for-libs-test
+;;  (testing "get stats for 3 days for two libs"
+;;    (is (get-stats-of-last-days-for-libs 3 ["viz-cljc" "viz-cljc"] ["lein-junit" "lein-junit"])
+;;        {["opencv" "opencv"] 1, ["progress" "progress"] 26})))
