@@ -6,13 +6,19 @@
 
 (defn yesterday [] (jtime/minus now (jtime/days 1)))
 
-(defn last-dates [days] (take days (jtime/iterate jtime/minus (yesterday) (jtime/days 1))))
+(defn last-dates [from how-many-days] (take how-many-days (jtime/iterate jtime/minus from (jtime/days 1))))
 
-(defn format-date [local-date] (jtime/format "yyyyMMdd" local-date))
+(defn format-date
+  "returning the provided LocalDate as String in yyyyMMdd"
+  [local-date] (jtime/format "yyyyMMdd" local-date))
 
-(defn days-since [date] (Math/abs (jtime/time-between (jtime/local-date) (jtime/local-date "yyyyMMdd" date) :days)))
+(defn days-since
+  "returning the full days between date as string and date as LocalDate"
+  [since to-date] (Math/abs (jtime/time-between to-date (jtime/local-date "yyyyMMdd" since) :days)))
 
-(defn download-stats [date]
+(defn download-stats
+  "given a date as yyyyMMdd-string, returns nil if file already exists or downloads it"
+  [date]
   (let [stats-file (clojure.java.io/file (str "stats/downloads-" date ".edn"))]
     (if (.exists stats-file)
       nil
@@ -26,10 +32,10 @@
   (download-stats formatted-date)
   (edn/read-string (slurp (str "stats/downloads-" formatted-date ".edn"))))
 
+(defn hashmapize [stats] (into (hash-map) (map (fn [tuple] {(key tuple) (reduce + (vals (val tuple)))}) stats)))
+
 (defn load-database []
   (read-stats (format-date (yesterday))))
-
-(defn hashmapize [stats] (into (hash-map) (map (fn [tuple] {(key tuple) (reduce + (vals (val tuple)))}) stats)))
 
 (defn get-stats [formatted-date] (hashmapize (read-stats formatted-date)))
 
