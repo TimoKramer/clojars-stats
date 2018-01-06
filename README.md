@@ -1,6 +1,6 @@
 # app
 
-A Clojure library designed to ... well, that part is up to you.
+working with the clojars stats to compare libraries
 
 ## Usage
 
